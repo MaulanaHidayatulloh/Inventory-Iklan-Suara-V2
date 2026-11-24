@@ -1,0 +1,157 @@
+/* Ad-specific styles extracted from the original first stylesheet. */
+.bg-ads-sticky-top {
+  width: 970px;
+  min-height: 90px;
+  background: #d9d9d9;
+  margin: 20px auto;
+}
+.ads-sticky-top {
+  position: sticky;
+  top: 13rem;
+}
+.sticky-ads.right {
+  left: auto;
+  right: 0;
+}
+.sticky-ads.left {
+  left: 0;
+}
+.sticky-ads .wrap-ads {
+  position: relative;
+  width: 100%;
+}
+.wrap-ads-bottom-sticky {
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+}
+.wrap-ads-bottom-sticky,
+div[id*="div-ad"] {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+.wrap-ads-bottom-sticky .bottom-ads {
+  position: relative;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.bottom-ads {
+  width: 970px;
+  min-height: 50px;
+  background: hsla(0, 0%, 100%, 0.8);
+}
+.wrap-ads-bottom-sticky i.icon-svg {
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+  padding: 10px;
+  top: -25px;
+  width: 20px;
+  height: 20px;
+  filter: invert(14%) sepia(75%) saturate(5825%) hue-rotate(350deg)
+    brightness(86%) contrast(108%);
+}
+.icon-close {
+  background-image: url("https://assets.suara.com/suara/desktop/images/icons/close.svg");
+  background-repeat: no-repeat;
+}
+.icon-svg {
+  background-size: cover;
+  display: inline-block;
+}
+.placeholder_belt,
+.placeholder_center,
+.placeholder_leaderboard,
+.placeholder_r1,
+.placeholder_r2,
+.placeholder_r3 {
+  width: 970px;
+  min-height: 250px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  display: grid;
+  background-color: #eee;
+}
+.placeholder_belt {
+  width: 100%;
+  min-height: 100px;
+  margin: 10px 0;
+}
+.placeholder_r1,
+.placeholder_r2,
+.placeholder_r3 {
+  width: 300px;
+  margin: 0;
+}
+.placeholder_r1 {
+  min-height: 600px;
+}
+.placeholder_r2 {
+  min-height: 250px;
+}
+.placeholder_r3 {
+  min-height: 100px;
+}
+.placeholder_center {
+  width: 336px;
+  min-height: 280px;
+  margin-bottom: 10px;
+}
+.placeholder_read_body {
+  max-width: 100%;
+  min-height: 250px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  display: grid;
+  background-color: #eee;
+}
+.bottom-ads:before,
+.placeholder_belt:before,
+.placeholder_center:before,
+.placeholder_leaderboard:before,
+.placeholder_r1:before,
+.placeholder_r2:before,
+.placeholder_r3:before,
+.placeholder_read_body:before {
+  background-color: #fff;
+  left: 0;
+  top: 0;
+  line-height: 1;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: -1;
+  color: #000;
+  display: flex;
+  content: "Ads on iklandisini.com";
+  opacity: 0.5;
+  font-size: 14px;
+}
+.sticky-ads {
+  position: fixed;
+  top: 118px;
+  width: 160px;
+  z-index: 1;
+  transition: 0.3s;
+}
+@media (max-width: 1420px) {
+  .sticky-ads {
+    width: calc((100vw - 1170px) / 2);
+  }
+}
+@media (max-width: 1320px) {
+  .sticky-ads {
+    display: none;
+  }
+}
