@@ -2,7 +2,7 @@
 window.ADS_CONFIG = {
   ENABLE_ALL_ADS: true,
   ENABLE_INTERSTITIAL: false,
-  ENABLE_EXTERNAL_ADS: true,
+  ENABLE_EXTERNAL_ADS: false,
   ENABLE_ADS: {
     "div-ad-leaderboard": false,
     "div-ad-center_belt": false,
@@ -177,7 +177,7 @@ googletag.cmd.push(function () {
   slot_ADdfpOtp.addService(googletag.pubads());
 
   var slot_ADdfpMediumrectangle1 = googletag.defineSlot(
-    "/148558260/SuaraMobile",
+    // "/148558260/SuaraMobile",
     [
       [300, 250],
       [300, 300],
