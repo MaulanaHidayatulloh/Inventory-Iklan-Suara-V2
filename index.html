@@ -237,28 +237,26 @@
           id="navWrapper"
           class="hidden lg:flex justify-center py-2 -translate-y-16"
         >
-          <div id="navGroup" class="flex items-center gap-3">
+          <div id="navGroup" class="flex items-center">
             <ul
               id="navList"
-              class="flex lg:text-sm 2xl:text-lg items-center gap-2 2xl:gap-5 border-y border-white py-1 pl-6 pr-1 rounded-4xl bg-white/20 backdrop-blur-xl shadow-xl"
+              class="flex lg:text-sm 2xl:text-lg items-center gap-2 2xl:gap-5 border-y border-white py-1 pl-6 pr-1 rounded-4xl bg-white/20 backdrop-blur-xl shadow-xl [transition:background-color_300ms_ease-out,box-shadow_300ms_ease-out,color_120ms_ease-out]"
             >
               <li class="mr-10 2xl:mr-20">
-                <img
-                  id="logoPutih"
-                  class="w-24 2xl:w-32"
-                  height="626"
-                  width="209"
-                  src="images/logo-putih.png"
-                  alt=""
-                />
-                <img
-                  id="logoColor"
-                  height="626"
-                  width="209"
-                  class="hidden w-24 2xl:w-32"
-                  src="images/logo_suara.com.png"
-                  alt=""
-                />
+                <div class="relative">
+                  <img
+                    id="logoPutih"
+                    class="w-24 2xl:w-32 transition-opacity duration-300"
+                    src="images/logo-putih.png"
+                    alt=""
+                  />
+                  <img
+                    id="logoColor"
+                    class="absolute inset-0 w-24 2xl:w-32 opacity-0 transition-opacity duration-300"
+                    src="images/logo_suara.com.png"
+                    alt=""
+                  />
+                </div>
               </li>
               <li>
                 <a
@@ -394,10 +392,13 @@
                 </a>
               </li>
             </ul>
-            <div class="relative">
+            <div
+              id="searchWrap"
+              class="relative ml-0 transition-[margin] duration-300 ease-out"
+            >
               <button
                 id="searchBtn"
-                class="hidden items-center justify-center gap-2 border-y border-white w-[62px] h-[62px] rounded-4xl bg-white/20 backdrop-blur-xl shadow-xl cursor-pointer hover:-translate-y-0.5 duration-300"
+                class="flex items-center justify-center overflow-hidden w-0 h-[62px] opacity-0 pointer-events-none border-y border-white rounded-4xl bg-white/70 text-black backdrop-blur-xl shadow-xl cursor-pointer transition-all duration-300 ease-out hover:-translate-y-0.5"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -4185,6 +4186,9 @@
       const logoPutih = document.getElementById("logoPutih");
       const logoColor = document.getElementById("logoColor");
       const desiredTop = 20;
+      const searchWrap = document.getElementById("searchWrap");
+      const fixedClasses = ["fixed", "top-21", "left-0", "right-0", "z-50"];
+      let isScrolled = false;
 
       function getNavOffset() {
         // reset dulu ke kondisi normal sebelum ngukur, biar akurat
@@ -4218,59 +4222,41 @@
       let navOffset = getNavOffset();
 
       function updateNavBarState() {
-        if (window.scrollY > navOffset) {
-          if (!navWrapper.classList.contains("fixed")) {
-            navPlaceholder.style.height = navWrapper.offsetHeight + "px";
-          }
+        const scrolled = window.scrollY > navOffset;
+        if (scrolled === isScrolled) return; // cuma jalan pas state berubah
+        isScrolled = scrolled;
 
-          navWrapper.classList.add(
-            "fixed",
-            "top-21",
-            "left-0",
-            "right-0",
-            "z-50",
-          );
+        if (scrolled) {
+          navPlaceholder.style.height = navWrapper.offsetHeight + "px";
+          navWrapper.classList.add(...fixedClasses);
           navWrapper.style.height = "auto";
-
-          navList.classList.remove("bg-white/20", "text-white");
-          navList.classList.add(
-            "bg-white/70",
-            "border-black/10",
-            "text-black",
-            "shadow-md",
-          );
-
-          searchBtn.classList.remove("hidden", "bg-white/70", "text-white");
-          searchBtn.classList.add("flex", "bg-white/70", "text-black");
-          logoPutih.classList.add("hidden");
-          logoColor.classList.remove("hidden");
         } else {
-          navWrapper.classList.remove(
-            "fixed",
-            "top-21",
-            "left-0",
-            "right-0",
-            "z-50",
-          );
+          navWrapper.classList.remove(...fixedClasses);
           navPlaceholder.style.height = "0px";
-
-          navList.classList.remove(
-            "bg-white/70",
-            "border-black/10",
-            "text-black",
-            "shadow-md",
-          );
-          navList.classList.add("bg-white/20");
-
-          searchBtn.classList.add("hidden", "bg-white/70", "text-white");
-          searchBtn.classList.remove("flex", "bg-white/70", "text-black");
-          logoPutih.classList.remove("hidden");
-          logoColor.classList.add("hidden");
-
           searchDropdown.classList.add("hidden");
         }
-      }
 
+        // warna navList
+        navList.classList.toggle("bg-white/20", !scrolled);
+        navList.classList.toggle("text-white", !scrolled);
+        navList.classList.toggle("bg-white/70", scrolled);
+        navList.classList.toggle("text-black", scrolled);
+        navList.classList.toggle("shadow-md", scrolled);
+        navList.classList.toggle("shadow-xl", !scrolled);
+
+        // logo crossfade
+        logoPutih.classList.toggle("opacity-0", scrolled);
+        logoColor.classList.toggle("opacity-0", !scrolled);
+
+        // tombol search melebar pelan, navList ikut geser halus
+        searchBtn.classList.toggle("w-0", !scrolled);
+        searchBtn.classList.toggle("opacity-0", !scrolled);
+        searchBtn.classList.toggle("pointer-events-none", !scrolled);
+        searchBtn.classList.toggle("w-[62px]", scrolled);
+        searchBtn.classList.toggle("opacity-100", scrolled);
+        searchWrap.classList.toggle("ml-3", scrolled);
+        searchWrap.classList.toggle("ml-0", !scrolled);
+      }
       let resizeTimeoutnav;
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimeoutnav);
